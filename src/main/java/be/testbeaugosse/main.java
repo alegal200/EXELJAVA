@@ -8,11 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class main{
     public static void main(String[]args) throws IOException {
@@ -25,17 +22,33 @@ public class main{
 
         Sheet sheet = workbook.getSheetAt(0);
 
-        int numrow  ;
+        int numrow  ; // recupe le nbr de lignes
 
         numrow = sheet.getLastRowNum() ;
-        System.out.println("nbr de colones : "+ sheet.getRow(0).getLastCellNum() );
+
         for (int i = 0; i < numrow; i++) {
-            for (int j = 0; j < sheet.getRow(i).getLastCellNum(); j++) {
+            for (int j = 0; j < sheet.getRow(i).getLastCellNum(); j++) { // recup la dernier case de la ligne
+                if(sheet.getRow(i).getCell(j) != null )
                 System.out.print( sheet.getRow(i).getCell(j)+"\t" );
             }
-            System.out.println("");
+            System.out.println("");         // affiche l ensemble du contenu
 
         }
+
+        // écriture
+
+            Row row1 = sheet.createRow(0);
+
+        for (int i = 0; i < 15; i++) {
+            Cell c1 =   row1.createCell(i) ;
+            c1.setCellValue("val"+i);
+
+        }
+
+        FileOutputStream fos = new FileOutputStream("D:\\alex\\perso\\java\\intelijiexcelTest\\src\\main\\resources\\a.xlsx") ;
+        workbook.write(fos);
+        fos.flush();
+
     }
 }
 
